@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ENJOYOR</title>
+	<link rel="stylesheet" href="./vender/ydui/ydui.rem.css">
+	<script src="./vender/ydui/ydui.flexible.js"></script>
+	<style>
+		.check {
+			color: #f00;
+		}
+
+		li {
+			line-height: 30px;
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+	<div class="p-question" v-for="(question,key) in questions" :key="key" v-if="key==currentIndex?true:false">
+		<div class="question">{{question.name}}</div>
+		<ul>
+			<li v-for="(option,index) in question.options" :key="index"
+			    @click="question.isSingle=='true'?singleSelect():multSelect()">{{option}}
+			</li>
+		</ul>
+	</div>
+	<yd-button type="primary" @click.native="nextClick">Click Me!</yd-button>
+</div>
+
+
+<script src="./vender/vue.min.js"></script>
+<script src="./vender/ydui/ydui.rem.js"></script>
+<script src="./vender/zepto.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            currentIndex: 0,
+            isChange: '',
+            answerList: [],
+            questions: [
+                {
+                    name: '1.中国的国土面积有多大？',
+                    options: ['A.900万平方公里', 'B.950万平方公里', 'C.960万平凡公里'],
+                    isSingle:'true'
+                },
+                {
+                    name: '2.中国的国土面积有多大？',
+                    options: ['A.900万平方公里', 'B.950万平方公里', 'C.960万平凡公里'],
+                    isSingle:'false'
+                },
+                {
+                    name: '3.中国的国土面积有多大？',
+                    options: ['A.900万平方公里', 'B.950万平方公里', 'C.960万平凡公里'],
+                    isSingle:'true'
+                },
+                {
+                    name: '4.中国的国土面积有多大？',
+                    options: ['A.900万平方公里', 'B.950万平方公里', 'C.960万平凡公里'],
+                    isSingle:'false'
+                },
+                {
+                    name: '5.中国的国土面积有多大？',
+                    options: ['A.900万平方公里', 'B.950万平方公里', 'C.960万平凡公里'],
+                    isSingle:'true'
+                },
+            ]
+        },
+        methods: {
+            nextClick: function () {
+                this.currentIndex++;
+                var answerOption = $('.p-question').find('li.check').index();
+                this.answerList.push(answerOption);
+                console.log(this.answerList);
+            },
+            singleSelect: function (event) {
+                $(event.currentTarget).addClass('check').siblings('li').removeClass('check');
+            },
+	        multSelect:function (event) {
+                $(event.currentTarget).addClass('check');
+            }
+        }
+    })
+</script>
+</body>
+</html>
